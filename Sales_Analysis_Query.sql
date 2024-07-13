@@ -29,13 +29,13 @@ WITH customer_revenue AS (
         customer_id
 ),
 customer_tenure as (
-				select 
-					customer_id,
-					DATEDIFF(month,MIN(invoice_date),GETDATE()) as tenure_months
-		        from 
-					customer_shopping_data
-		        group by 
-					customer_id
+	            select 
+		      customer_id,
+		      DATEDIFF(month,MIN(invoice_date),GETDATE()) as tenure_months
+		    from 
+		       customer_shopping_data
+		    group by 
+			customer_id
 ),
 churn_rate as (select 
 		CAST(ROUND(100.0 * COUNT(case when tenure_months < 24 THEN 1 END)/count(*),2) AS float) as monthly_churn_rate 
